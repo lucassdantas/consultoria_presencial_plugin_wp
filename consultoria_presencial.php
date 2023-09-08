@@ -15,13 +15,11 @@ if(!function_exists('add_action')){
 
 require_once plugin_dir_path( __FILE__ ). 'src/add_my_account_tab.php';
 
-add_action('woocommerce_before_checkout_form', 'update_user_id');
+add_action('woocommerce_before_checkout_form', 'update_user_booking_quantity');
 
-function update_user_id(){
+function update_user_booking_quantity($booking_quantity = 1){
     $user_id = get_current_user_id(); 
     $meta_key = 'agendamentos-presenciais-disponiveis'; 
-    
-    $booking_quantity = 2;
     
     $old_meta_value = get_user_meta($user_id, $meta_key, true);
     $new_meta_value = strval(intval($old_meta_value) + $booking_quantity);
@@ -39,7 +37,7 @@ function check_payment_status($order_id) {
     echo '</pre>';
     // Check if the order is completed and paid
     if ($order->has_status('completed') && $order->is_paid()) {
-        update_user_id();
+        update_user_booking_quantity();
         // Payment was successful, process the order
         // You can add your custom code here to handle a successful payment
         // For example, update order status, send confirmation emails, etc.
@@ -47,4 +45,10 @@ function check_payment_status($order_id) {
         // Payment was not successful
         // You can handle unsuccessful payments here
     }
+}
+
+add_action('AmeliaBookingAddedBeforeNotify', 'update_booking_quantity_when_book');
+
+function update_booking_quantity_when_book($booking_id) {
+    update_user_booking_quantity(-1);
 }

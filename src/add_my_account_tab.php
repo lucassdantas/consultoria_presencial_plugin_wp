@@ -11,18 +11,12 @@ function consultoria_presencial_endpoint() {
   
 add_action( 'init', 'consultoria_presencial_endpoint' );
   
-// ------------------
-// 2. Add new query var
-  
 function consultoria_presencial( $vars ) {
     $vars[] = 'consultoria-presencial';
     return $vars;
 }
   
 add_filter( 'query_vars', 'consultoria_presencial', 0 );
-  
-// ------------------
-// 3. Insert the new endpoint into the My Account menu
   
 function add_consultoria_presencial_tab( $items ) {
     $items['consultoria-presencial'] = 'Consultoria Presencial';
@@ -31,11 +25,16 @@ function add_consultoria_presencial_tab( $items ) {
   
 add_filter( 'woocommerce_account_menu_items', 'add_consultoria_presencial_tab' );
   
-// ------------------
-// 4. Add content to the new tab
-  
 function conteudo_consultoria_presencial() {
+    $user_id = get_current_user_id(); 
+    $meta_key = 'agendamentos-presenciais-disponiveis'; 
     echo '<h3>Sua consultoria presencial</h3>';
+    echo '<p>Agendamentos disponíveis: '. get_user_meta($user_id, $meta_key, true) .'</p>';
+    if( get_user_meta($user_id, $meta_key, true) > 0){
+        echo do_shortcode('[ameliastepbooking]');
+    } else {
+        echo '<p>Você está sem agendamentos disponíveis!</p>';
+    }
     #echo do_shortcode( ' /* your shortcode here */ ' );
 }
   
