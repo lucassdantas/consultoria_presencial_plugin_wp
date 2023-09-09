@@ -22,7 +22,7 @@ function update_user_booking_quantity($booking_quantity = 1){
     $meta_key = 'agendamentos-presenciais-disponiveis'; 
     
     $old_meta_value = get_user_meta($user_id, $meta_key, true);
-    $new_meta_value = strval(intval($old_meta_value) + $booking_quantity);
+    $new_meta_value = 1;#strval(intval($old_meta_value) + $booking_quantity);
     update_user_meta($user_id, $meta_key, $new_meta_value);
 }
 
@@ -32,9 +32,9 @@ add_action('woocommerce_payment_complete', 'check_payment_status');
 function check_payment_status($order_id) {
     // Get the order object
     $order = wc_get_order($order_id);
-    echo '<pre>';
-    print_r($order);
-    echo '</pre>';
+    // echo '<pre>';
+    // print_r($order);
+    // echo '</pre>';
     // Check if the order is completed and paid
     if ($order->has_status('completed') && $order->is_paid()) {
         update_user_booking_quantity();

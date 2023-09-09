@@ -4,7 +4,7 @@ defined('ABSPATH') or die();
 if(!function_exists('add_action')){
     die;
 }
-
+require_once plugin_dir_path(__FILE__) . 'check_current_products.php';
 function consultoria_presencial_endpoint() {
     add_rewrite_endpoint( 'consultoria-presencial', EP_ROOT | EP_PAGES );
 }
