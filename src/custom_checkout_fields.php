@@ -1,6 +1,6 @@
 <?php 
 
-add_filter('woocommerce_review_order_before_order_total', 'custom_date_field');
+add_filter('woocommerce_checkout_fields', 'custom_date_field');
 function custom_date_field($fields)
 {	
     $fields['billing']['booking_quantity'] = array(
@@ -14,6 +14,8 @@ function custom_date_field($fields)
             'readonly' => 'readonly', // Set the field to readonly
         ),
     );
+	
+	$fields['billing']['booking_quantity']['priority'] = 9;
     return $fields;
 }
 
