@@ -11,7 +11,7 @@ function custom_date_field($fields)
         'class'     => array('form-row-wide'),
         'default'   => $GLOBALS['current_booking_quantity'],
         'custom_attributes' => array(
-            'readonly' => 'readonly', // Set the field to readonly
+            'readonly' => 'readonly'
         ),
     );
 	
@@ -31,6 +31,6 @@ function save_custom_shipping_fields($order_id) {
 add_action( 'woocommerce_admin_order_data_after_shipping_address', 'display_booking_quantity_on_order', 10, 1 );
 
 function display_booking_quantity_on_order($order){
-	$shippingType =  get_post_meta( $order->get_id(), 'booking_quantity', true );
-	echo '<p><strong>'.__('Tipo de entrega:').'</strong> ' . $shippingType . '</p>';
+	$order_booking_quantity =  get_post_meta( $order->get_id(), '_booking_quantity', true );
+	echo '<p><strong>'.__('Agendamentos adquiridos: ').'</strong> ' . $order_booking_quantity . '</p>';
 }

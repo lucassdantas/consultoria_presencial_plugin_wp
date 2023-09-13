@@ -17,16 +17,12 @@ $GLOBALS['current_booking_quantity'] = get_user_meta(get_current_user_id(), 'age
 
 require_once plugin_dir_path( __FILE__ ). 'src/add_my_account_tab.php';
 
-
-
-add_action('woocommerce_before_checkout_form', 'update_temp_booking_quantity');
-add_action('woocommerce_before_checkout_form', 'update_user_booking_quantity');
+//remover esse action depois
+#add_action('woocommerce_before_checkout_form', 'update_user_booking_quantity');
 function update_user_booking_quantity($booking_quantity = 1){
     $user_id = get_current_user_id(); 
     $meta_key = 'agendamentos-presenciais-disponiveis'; 
-    print_r($GLOBALS['current_booking_quantity']);
     if(is_int($booking_quantity)){
-        echo $GLOBALS['current_booking_quantity'];
         $old_meta_value = get_user_meta($user_id, $meta_key, true);
         $new_meta_value = strval(intval($old_meta_value) + $booking_quantity);
 
@@ -34,6 +30,7 @@ function update_user_booking_quantity($booking_quantity = 1){
     }
 }
 require_once plugin_dir_path(__FILE__) . 'src/custom_checkout_fields.php';
+
 add_action('woocommerce_payment_complete', 'check_payment_status_and_update_meta');
 function check_payment_status_and_update_meta($order_id) {
     $order = wc_get_order($order_id);

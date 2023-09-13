@@ -1,6 +1,8 @@
 <?php 
 
 #add_action('woocommerce_before_checkout_form', 'update_current_temp_booking_quantity');
+add_action('woocommerce_before_checkout_form', 'update_temp_booking_quantity');
+
 function update_temp_booking_quantity() {
     foreach ( WC()->cart->get_cart() as $cart_item ) {
         $product = $cart_item['data'];
@@ -24,8 +26,6 @@ function update_temp_booking_quantity() {
                     
                     break;
             }
-            // to display only the first product image uncomment the line below
-            // break;
         }
     }
 }
