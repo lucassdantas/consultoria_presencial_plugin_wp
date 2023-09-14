@@ -27,13 +27,13 @@ function update_user_booking_quantity($booking_quantity = 1){
 }
 require_once plugin_dir_path(__FILE__) . 'src/custom_checkout_fields.php';
 
-add_action('woocommerce_thankyou', 'check_payment_status_and_update_meta');
+add_action('woocommerce_order_status_completed', 'check_payment_status_and_update_meta');
 function check_payment_status_and_update_meta($order_id) {
     $order = wc_get_order( $order_id );
     $user_id = $order->get_user_id();
     if ( $order->get_customer_ip_address() ) {  
         $current_booking = get_post_meta( $order->get_id(), '_booking_quantity', true );
-        update_user_booking_quantity($current_booking);
+        if($current_booking > 0) update_user_booking_quantity($current_booking);
     }
     /*
     $order = wc_get_order($order_id);
