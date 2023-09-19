@@ -3,7 +3,7 @@
 * Plugin Name: Consultoria presencial
 * Plugin URI: https://github.com/lucassdantas/consultoria_presencial_plugin_wp.git
 * Description: Consultoria presencial
-* Version: 0.34
+* Version: 0.36
 * Author: Lucas Dantas
 * Author URI: lucassdantas.github.io
 **/
@@ -56,5 +56,4 @@ add_action('AmeliaAppointmentBookingCanceled', 'update_booking_when_cancel');
 function update_booking_when_cancel($booking_id){
     $user_id = get_current_user_id();
     update_user_booking_quantity(1, $user_id);
-    header("Refresh:1");
 }
